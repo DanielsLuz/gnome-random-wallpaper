@@ -1,5 +1,6 @@
 import requests
 import os
+from pathlib import Path
 from subprocess import call, check_output
 
 def save_random_image(width, height, filename):
@@ -15,11 +16,10 @@ def get_monitor_resolution():
     return output.decode('utf-8').strip().split('x')
 
 def main():
-    dirpath = os.getcwd()
     filename = "wallpaper.temp"
     save_random_image(*get_monitor_resolution(), filename)
     COMMAND_SET_BACKGROUND = "gsettings set org.gnome.desktop.background picture-uri"
-    call(f'{COMMAND_SET_BACKGROUND} file://{dirpath}/{filename}', shell=True)
+    call(f'{COMMAND_SET_BACKGROUND} file://{str(Path.home())}/{filename}', shell=True)
 
 if __name__ == '__main__':
     main()
